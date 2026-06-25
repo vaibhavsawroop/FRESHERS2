@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 5 6 10;
+    --fg: 237 240 248;
+    --muted: 148 156 178;
+    --line: 255 255 255;
+    --brand: 212 160 23;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset for the fixed navbar when jumping to anchors */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-ink text-slate-100 font-sans antialiased;
+    background-color: rgb(var(--bg));
+    color: rgb(var(--fg));
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(212, 160, 23, 0.35);
+    color: #fff;
+  }
+
+  /* Slim, on-theme scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #d4a017, #6b3fae);
+    border-radius: 999px;
+    border: 2px solid rgb(var(--bg));
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #eecb63, #9061d6);
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer components {
+  /* Section shell — consistent rhythm + max width */
+  .container-px {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  .section {
+    @apply relative py-24 sm:py-32;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-slate-300 backdrop-blur;
+  }
+
+  /* Gradient text used for headlines */
+  .text-gradient {
+    @apply bg-gradient-to-r from-brand-300 via-violet-400 to-teal-400 bg-clip-text text-transparent;
+  }
+
+  /* Glass card */
+  .glass {
+    @apply rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 will-change-transform hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06];
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink;
+  }
+  .btn-primary {
+    @apply btn bg-white text-ink hover:bg-slate-200 hover:shadow-glow;
+  }
+  .btn-ghost {
+    @apply btn border border-white/15 bg-white/[0.02] text-slate-100 hover:border-white/30 hover:bg-white/[0.06];
+  }
+
+  /* Subtle dotted/grid backdrop */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .bg-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Animated gradient border wrapper */
+  .gradient-ring {
+    position: relative;
+  }
+  .gradient-ring::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(212, 160, 23, 0.6), rgba(144, 97, 214, 0.45), rgba(52, 211, 153, 0.55));
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+@layer utilities {
+  .mask-fade-y {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  }
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* Respect users who prefer less motion — keeps it smooth + accessible */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
